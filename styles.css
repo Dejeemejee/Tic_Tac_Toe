@@ -1,0 +1,32 @@
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 200px;
+    
+    /* Centralize on screen */
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* Light purple background */
+    background-color: #e6d5f5;  /* or #dac3f0, #f0e6ff */
+    
+}
+
+.board-cells {
+    padding: 40px;  /* Makes cells bigger */
+    background-color: #e6d5f5;  /* Light purple background */
+    color: #4c1d95;  /* Dark purple text color */
+    border: 3px solid #7c3aed;  /* Bold dark purple border */
+    border-radius: 5px;
+    font-size: 24px;  /* Bigger text for X and O */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;  /* Smooth hover effect */
+}
+
+.board-cells:hover {
+    background-color: #dac3f0;  /* Slightly darker on hover */
+}
