@@ -1,32 +1,140 @@
 .game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 200px;
-    
-    /* Centralize on screen */
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
-    /* Light purple background */
-    background-color: #e6d5f5;  /* or #dac3f0, #f0e6ff */
-    
+    grid-template-rows: repeat(3, 1fr);
+   /* width: 200px; */
+    height: 400px;
+    background-color: #7c3aed;  
+    gap: 3px; 
+    padding: 3px; 
+}
+
+
+.container {
+    height: 80vh;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    align-items: center;
+    align-content: center;
+    gap: 2rem;
+}
+
+div.container > p {
+    flex-basis: 10vw;
+    flex-grow: 1;
+    flex-shrink: 1;
+
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    border: 2px solid rgb(42, 44, 165);
+    background-color: rgb(32, 24, 33);
+    height: 35px;
+    color: rgb(245, 247, 252);
+    gap: 2px;
+    font-size: 3ch;
+}
+
+div.container > p > span {
+    padding-left: 10px;
+    color: #dc0ea5;
+}
+#board {
+    flex-basis: 80vw;
+    max-width: 400px;
+    min-width: 250px; 
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
 .board-cells {
-    padding: 40px;  /* Makes cells bigger */
-    background-color: #e6d5f5;  /* Light purple background */
-    color: #4c1d95;  /* Dark purple text color */
-    border: 3px solid #7c3aed;  /* Bold dark purple border */
+    background-color: #e6d5f5;
+    color: #4c1d95;
+    border: none;
     border-radius: 5px;
-    font-size: 24px;  /* Bigger text for X and O */
+    font-size: 24px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.2s;  /* Smooth hover effect */
+    transition: background-color 0.2s;
 }
 
 .board-cells:hover {
-    background-color: #dac3f0;  /* Slightly darker on hover */
+    background-color: #dac3f0;  
+}
+
+
+#reset {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#reset:hover {
+    background-color: #6d28d9;
+}
+
+div.screen > button {
+   display: block;
+   margin: 2rem auto 0 auto;
+}
+
+.curved-header {
+    text-align: center;
+}
+
+.curved-header svg {
+    width: 100%;
+    max-width: 700px;
+    height: 180px;
+}
+
+.curved-header text {
+    fill: #110b29;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.274);
+}
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 280px;
+}
+
+#modalMessage {
+    letter-spacing: 2px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: larger;
+    color: #250a4e;
+}
+
+#closeModal {
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.797);
+    background-color: #6d28d9;
+    padding: 10px;
+}
+
+.hidden {
+  display: none;
 }

@@ -8,6 +8,34 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="game-board"></div>
+    <div class="header-container">
+        <div class="curved-header">
+           <svg viewBox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
+    <!--           ^ Increase from 500 to 600 or more -->
+                <path id="curve" d="M 50,100 Q 300,20 550,100" fill="transparent"/>
+                <!--                          ^ Adjust middle and end points too -->
+                <text>
+                    <textPath href="#curve" startOffset="50%" text-anchor="middle">
+                        WELCOME TO TIC-TAC-TOE
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+    </div>
+    <div class="screen">
+        <div class="container">
+            <p>Player 1: <span>"X"</span></p>
+            <div class="game-board" id="board"></div>
+            <p>Player 2: <span>"0"</span></p>
+        </div>
+        <button id="reset">Reset Game</button>
+
+        <div class="modal hidden" id="winnerModal">
+          <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button id="closeModal">OK</button>
+          </div>
+       </div>
+    </div>
 </body>
 </html>

@@ -81,8 +81,8 @@ function player(name, choice) {
 
 function gameControl() {
  
-  const player1 = player("player1", "X")
-  const player2 = player("player2", "O")
+  const player1 = player("Player1", "X")
+  const player2 = player("Player2", "O")
   let currentPlayer = player1
   let numberOfPlay = 0;
   let gameStatus = false;
@@ -99,43 +99,58 @@ function gameControl() {
  const getCurrentPlayer = () => currentPlayer;
 
  const announceWinner = () => {
-  console.log(`Congratulations!!! ${currentPlayer.getName()} with the letter ${currentPlayer.getChoice()} Wins!!!`)
   gameStatus = true;
+  return `Congratulations!!! ${currentPlayer.getName()} with the letter ${currentPlayer.getChoice()} Wins!!!`
+  
  }
 
  const getGameStatus = () => gameStatus;
 
 
+ const getWinnerMessage = () => winnerMessage;
+
 
     const handleMove =  (row, col) => {
        if (!gameBoard.checkEmptyCells(row, col)) {
-        return true;
-      } else {
+        return {valid: false}
+      } 
         play(row, col)
         numberOfPlay++;
-        if (gameBoard.checkFullMatch()) {  
-          announceWinner();
-          gameBoard.resetBoard();  
-        }
-      }
 
-      /* if (numberOfPlay === 9 && !gameBoard.checkFullMatch()) {
-        console.log("It's a tie!"); */
+
+        if (gameBoard.checkFullMatch()) {  
+          const winnerMessage = announceWinner();
+          gameBoard.resetBoard(); 
+          return {
+            valid: true,
+            gameOver: true,
+            winnerMessage
+          }; 
+        }
+
+        return {
+          valid: true,
+          gameOver: false
+        }
     }
    
 
 
     
 
-  return {player1, player2, currentPlayer, play, announceWinner, switchPlayer, getCurrentPlayer, handleMove, getGameStatus}
+  return {player1, player2, currentPlayer, play, announceWinner, switchPlayer, getCurrentPlayer, handleMove, getGameStatus, getWinnerMessage}
 
 }
 
 
 const screenController = (function () {
   const newGame = gameControl();
+  const parent = document.querySelector(".game-board");
+  const reset = document.querySelector("#reset");
+  const modal = document.querySelector("#winnerModal");
+  const modalMessage = document.querySelector("#modalMessage");
+  const closeModalBtn = document.querySelector("#closeModal");
 
-  const parent = document.querySelector(".game-board")
   
   
   const displayBoard = () => {
@@ -161,27 +176,47 @@ const screenController = (function () {
    }
   }
 
+
+
+  reset.addEventListener("click", () => {
+    gameBoard.resetBoard();  
+    updateBoard();           
+    displayBoard();         
+  });
+
+
   parent.addEventListener("click", (e) => {
-      if (e.target.classList.contains('board-cells')) {
-        console.log('Button Clicked!', e.target)
-      }
+
+    if (!e.target.classList.contains("board-cells")) return;
       
       const row = e.target.dataset.row;
       const col = e.target.dataset.col;
    
+      const result =  newGame.handleMove(row, col);
+       
 
+      if (!result.valid) return;
+      e.target.textContent = newGame.getCurrentPlayer().getChoice();
+
+
+       if (result.gameOver) {
+          displayResults(result.winnerMessage);
+          resetGame();
+          return;
+        }
        
-       if ((newGame.handleMove(row, col))) {
-        return
-       } else {
-         const button = e.target
-         button.textContent = newGame.getCurrentPlayer().getChoice()
-         newGame.switchPlayer();
-       }
-       
-    resetGame();
+       newGame.switchPlayer();
     
   })
+  
+  closeModalBtn.addEventListener("click", () => {
+    hideModal();
+  });
+
+
+  const displayResults = (message) => {
+     showModal(message)
+  }
 
   const resetGame = () => {
     if (newGame.getGameStatus()) {
@@ -192,12 +227,19 @@ const screenController = (function () {
     }
   }
 
-  const boardClick = () => {
+ const showModal = (message) => {
+  modalMessage.textContent = message;
+  modal.classList.remove("hidden");
+};
 
-  }
+const hideModal = () => {
+  modal.classList.add("hidden");
+};
    return {displayBoard, updateBoard, resetGame}
   
 })();
+
+
 
 screenController.displayBoard();
 
